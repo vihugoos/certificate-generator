@@ -32,7 +32,6 @@
         <li><a href="#prerequisites"> Prerequisites </a></li>
         <li><a href="#installation"> Installation </a></li>
         <li><a href="#usage"> Usage </a></li>
-        <li><a href="#tests"> Tests </a></li>
       </ul>
     </li>
     <li><a href="#contributing"> Contributing </a></li>
@@ -85,12 +84,12 @@ Two AWS Lambda functions for generating and verifying a course certificate (Serv
 
 To get started, you need to have <strong>Node.js 18+</strong> installed on your machine, for more information visit <a href="https://nodejs.org/en/download/"> Node.js Downloads</a>. 
 
-<strong>Obs:</strong> This guide will only serve to run the project locally (development environment). 
+<strong>Obs:</strong> This guide will only serve to run the project locally (development environment), initially based on linux systems. 
 
 
 ### Prerequisites 
 
-Other than node.js, no prerequisites are needed to install the application.
+In addition to node.js, you will need to have <a href="https://www.google.com/chrome/">Google Chrome</a> installed on your machine as it will be used for PDF conversion. 
 
 
 ### Installation 
@@ -99,233 +98,39 @@ Other than node.js, no prerequisites are needed to install the application.
    ```cmd
    npm install -g serverless 
    ```
-2. Clone the repo 
+2. If you haven't installed it yet, you will need to install the JDK (Java Development Kit)
+   ```
+   sudo apt install default-jdk 
+   ```
+3. Clone the repo 
    ```bash
    git clone https://github.com/vihugoos/certificate-generator.git
    ```
-3. Inside the project root directory install all project dependencies 
+4. Inside the project root directory install all project dependencies 
    ```bash
    yarn install 
    ```
-4. Create avatar and cars folder
-   ```cmd
-   mkdir tmp/avatar | mkdir tmp/cars 
-   ```
-4. Create database services in docker containers 
-   ```cmd
-   docker compose up -d
-   ```
-5. Run the migrate 
-   ```cmd
-   yarn typeorm migration:run 
+5. Install amazon dynamodb 
+   ```bash
+   yarn dynamodb:install 
    ```
 
 
 <!---- USAGE EXAMPLES ----> 
 ## Usage
 
-With the installation complete, we can start the project.
+With the installation complete, we can start the project. <b>IMPORTANT:</b> Run the two commands below in different tabs, both need to be running at the same time.
 
-* Starting the project 
+1. Starting database 
    ```bash
-   yarn run dev  
+   yarn dynamodb:start  
    ```
-
-
-<!---- TESTS SETUP ----> 
-## Tests
-
-To be able to run all the tests, follow the commands below:
-
-1. Install PostgreSQL Client
+2. Open a new terminal tab and run the project  
    ```bash
-   sudo apt-get install -y postgresql-client
+   yarn dev  
    ```
-1. Open and connect terminal-based front-end for PostgreSQL (password: 12345)
-   ```cmd
-   psql -h localhost -p 6443 -U user_test -W rentx
-   ```
-2. Run the query (create a database just for testing) 
-   ```sql
-   CREATE DATABASE rentx_test;
-   ```
-3. Quit psql
-   ```cmd
-   \q
-   ```
-4. Run all test
-   ```cmd
-   yarn test 
-   ```
-
-<br/> <br/>
-
-
-<!---- API Documentation ----> 
-## API Documentation
-
-A complete and detailed documentation of the application in swagger. To view, visit [`api-rentx.com/api-docs/`](https://api-rentx.com/api-docs/)
-
-<img src="https://user-images.githubusercontent.com/44311634/208123952-63101a0d-58e2-4b09-9fb2-6740ca89fdd0.png" align="center" alt="Swagger DOC">
-
-<br/> <br/>
-
-
-## Requirements Documentation 
-
-A complete application specification, with all functional and non-functional requirements and business rules.
-
-### Cars Registration 
-
-**RF** (<i>Functional Requirements</i>)
-- It must be possible registration a new car.
-
-**RN** (<i>Business Rules</i>)
-- It must not be possible to register a car with an existing license plate.
-- The car must be registered, by default, with availability.
-- The user responsible for the registration must be an administrator user. 
-
----
-
-
-### Car Listing 
-
-**RF** (<i>Functional Requirements</i>)
-- It must be possible to list **available** cars. 
-- It must be possible to list all available cars by car name.
-- It must be possible to list all available cars by brand.
-- It must be possible to list all available cars by category id.
-- It must be possible to list all cars.
-
-**RN** (<i>Business Rules</i>)
-- To list available cars, the user does not need to be logged into the system.
-- To list all cars, the user must be an administrator.
-
----
-
-
-### Car Category 
-
-**RF** (<i>Functional Requirements</i>)
-- It must be possible to register a new category.
-- It must be possible to import a CSV with many categories to create.
-- It must be possible to list all categories.
-
-**RN** (<i>Business Rules</i>)
-- It must not be possible to register a new category for an existing category (with same name).
-- The user responsible for the registration must be an administrator user.
-- To list all categories, the user does not need to be logged into the system.
-
----
-
-
-### Car Specifications 
-
-**RF** (<i>Functional Requirements</i>)
-- It must be possible to register a new specification for a car.
-- It must be possible to list all specifications.
-
-**RN** (<i>Business Rules</i>)
-- It must not be possible to register a new specification for an existing specification (with same name).
-- It must not be possible to register a specification for an unregistered car. 
-- The user responsible for the registration must be an administrator user.
-- To list all specifications, the user must be an administrator. 
-
----
-
-
-### Car Images 
-
-**RF** (<i>Functional Requirements</i>)
-- It must be possible to register car image. 
-- It must be able to list all car images.
-
-**RNF** (<i>Non-functional requirements</i>)
-- Use the multer library to upload the files. 
-
-**RN** (<i>Business Rules</i>)
-- The user must able to register more than one image for the same car. 
-- The user responsible for the registration must be an administrator user. 
-- To list all car images, the user must be an administrator.
-
----
-
-
-### Car Rental Registration 
-
-**RF** (<i>Functional Requirements</i>)
-- It must be possible to register a new rental. 
-
-**RN** (<i>Business Rules</i>)
-- The rental must have a minimum duration of 24 hours. 
-- It must not to be possible to register a new rental for a non-existent car.
-- It must not be possible to register a new rental if it's already open for the same user. 
-- It must not be possible to register a new rental if it's already open for the same car. 
-- The user must be logged into the application.
-- After making a rental, the status of the car must be changed to unavailable.
-
----
-
-
-### Car Devolution
-
-**RF** (<i>Functional Requirements</i>)
-- It must be possible to return the car.
-
-**RN** (<i>Business Rules</i>)
-- If the car returns with less than 24 hours, it must be charged for the full day.
-- It must not be possible to return a non-existent rental.
-- After the return, the car must be released for another rental.
-- After the return, the user must be released for another rental.
-- After the return, the rent total must be calculated.
-- If the time of return is later than the estimated time of delivery, a fine will be charged proportional to the days of delay.
-- If there are fines, they must be added to the total rent.
-- The user must be logged into the application.
-
---- 
-
-
-### Users
-
-**RF** (<i>Functional Requirements</i>)
-- It must be possible to create a new user.
-- It must be possible to authenticate a user to the application.
-- It must be possible to upload a new profile picture for the user (avatar).
-- It must be possible to show all information about the user.
-- It must to possible to list all users.
-
-**RN** (<i>Business Rules</i>)
-- It must not be possible to create a new user with an existing email.
-- To create a new user, the user must not be logged into the application. 
-- To list all users, the user must be an administrator.
-
----
-
-
-### User Password Recovery
-
-**RF** (<i>Functional Requirements</i>)
-- It must be possible for the user to recover the password by informing the email.
-- The user should received an e-mail with step-by-step for password recovery.
-- The user should be able to get a new password.
-
-**RN** (<i>Business Rules</i>)
-- The user must enter a new password.
-- The link sent for password recovery must expire in 24 hours.
-
----
-
-
-### User Rentals Listing
-
-**RF** (<i>Functional Requirements</i>)
-- It must be possible to search all rentals made by user. 
-
-**RN** (<i>Business Rules</i>)
-- The user must be logged into the application.
 
 <br/> <br/> 
-
 
 <!---- CONTRIBUTING ---->
 ## Contributing
