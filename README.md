@@ -1,95 +1,352 @@
-# Serverless - AWS Node.js Typescript
+<div id="top"> </div>
 
-This project has been generated using the `aws-nodejs-typescript` template from the [Serverless framework](https://www.serverless.com/).
 
-For detailed instructions, please refer to the [documentation](https://www.serverless.com/framework/docs/providers/aws/).
+<!---- PROJECT LOGO ----> 
+<div align="center">
+  <h2 align="center"> 
+    AWS Lambda Functions  
+  </h2>
+  
+  <p align="center">
+    Two AWS Lambda Functions, developed with Node.js <br/>
+    Explore <a href="https://nodejs.org/en/docs/">Node.js</a> docs &#187; <br/> <br/>
+    <a href="https://github.com/vihugoos/certificate-generator/issues"> Report Bug </a> &nbsp;•&nbsp;
+    <a href="https://github.com/vihugoos/certificate-generator/issues"> Request Feature </a>
+  </p>
+</div>
 
-## Installation/deployment instructions
 
-Depending on your preferred package manager, follow the instructions below to deploy your project.
+<!---- TABLE OF CONTENTS ----> 
+<details>
+  <summary> Table of Contents </summary>
+  <ol>
+    <li>
+      <a href="#about-the-project"> About The Project </a>
+      <ul>
+        <li><a href="#built-with"> Built With </a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started"> Getting Started </a>
+      <ul>
+        <li><a href="#prerequisites"> Prerequisites </a></li>
+        <li><a href="#installation"> Installation </a></li>
+        <li><a href="#usage"> Usage </a></li>
+        <li><a href="#tests"> Tests </a></li>
+      </ul>
+    </li>
+    <li><a href="#contributing"> Contributing </a></li>
+    <li><a href="#contact"> Contact </a></li>
+  </ol>
+</details>
 
-> **Requirements**: NodeJS `lts/fermium (v.14.15.0)`. If you're using [nvm](https://github.com/nvm-sh/nvm), run `nvm use` to ensure you're using the same Node version in local and in your lambda's runtime.
 
-### Using NPM
+<!---- THE PROJECT ---->
+## About The Project 
 
-- Run `npm i` to install the project dependencies
-- Run `npx sls deploy` to deploy this stack to AWS
+<img src="" align="center" alt="Project Home Page">
+Two AWS Lambda functions for generating and verifying a course certificate (Serverless with Node.js). The <b>generateCertificate</b> function is responsible for receiving the data, generating a certificate, storing it in Amazon S3 and returning the pdf link in the request response. The <b>verifyCertificate</b> function receives the user ID to verify if the certificate is valid, if valid, it returns the pdf link.
 
-### Using Yarn
+### Built With 
 
-- Run `yarn` to install the project dependencies
-- Run `yarn sls deploy` to deploy this stack to AWS
+<div style="display: inline_block">
+    <!-- Icon Node.js --> 
+    <a href="https://nodejs.org/en/"> 
+      <img align="center" alt="Icon-Node.js" height="33" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"> 
+    </a> &nbsp;
+    <!-- Icon Yarn --> 
+    <a href="https://yarnpkg.com/"> 
+      <img align="center" alt="Icon-Yarn" height="33" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/yarn/yarn-original.svg"> 
+    </a> &nbsp;
+    <!-- Icon TypeScript --> 
+    <a href="https://www.typescriptlang.org/"> 
+      <img align="center" alt="Icon-TypeScript" height="33" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"> 
+    </a> &nbsp;
+    <!-- Icon AWS Lambda -->
+    <a href="https://aws.amazon.com/lambda/?nc1=h_ls"> 
+      <img align="center" alt="Icon-AWS-Lambda" height="34" src="https://user-images.githubusercontent.com/44311634/211214155-5ab98b96-b3bd-4fd4-ab0d-2ca9362e5497.png"> 
+    </a> &nbsp;
+    <!-- Icon AWS --> 
+    <a href="https://aws.amazon.com/"> 
+      <img align="center" alt="Icon-Jest" height="37" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original.svg"> 
+    </a> &nbsp;
+    <!-- Icon Serverless --> 
+    <a href="https://www.serverless.com/"> 
+      <img align="center" alt="Icon-Jest" height="33" src="https://user-images.githubusercontent.com/44311634/208251603-52add6e2-a6a0-4928-a1ce-a07ba1b786b0.png"> 
+    </a> 
+</div>
 
-## Test your service
+<br/>
+<br/>
 
-This template contains a single lambda function triggered by an HTTP request made on the provisioned API Gateway REST API `/hello` route with `POST` method. The request body must be provided as `application/json`. The body structure is tested by API Gateway against `src/functions/hello/schema.ts` JSON-Schema definition: it must contain the `name` property.
 
-- requesting any other path than `/hello` with any other method than `POST` will result in API Gateway returning a `403` HTTP error code
-- sending a `POST` request to `/hello` with a payload **not** containing a string property named `name` will result in API Gateway returning a `400` HTTP error code
-- sending a `POST` request to `/hello` with a payload containing a string property named `name` will result in API Gateway returning a `200` HTTP status code with a message saluting the provided name and the detailed event processed by the lambda
+<!---- GETTING STARTED ----> 
+## Getting Started
 
-> :warning: As is, this template, once deployed, opens a **public** endpoint within your AWS account resources. Anybody with the URL can actively execute the API Gateway endpoint and the corresponding lambda. You should protect this endpoint with the authentication method of your choice.
+To get started, you need to have <strong>Node.js 18+</strong> installed on your machine, for more information visit <a href="https://nodejs.org/en/download/"> Node.js Downloads</a>. 
 
-### Locally
+<strong>Obs:</strong> This guide will only serve to run the project locally (development environment). 
 
-In order to test the hello function locally, run the following command:
 
-- `npx sls invoke local -f hello --path src/functions/hello/mock.json` if you're using NPM
-- `yarn sls invoke local -f hello --path src/functions/hello/mock.json` if you're using Yarn
+### Prerequisites 
 
-Check the [sls invoke local command documentation](https://www.serverless.com/framework/docs/providers/aws/cli-reference/invoke-local/) for more information.
+Other than node.js, no prerequisites are needed to install the application.
 
-### Remotely
 
-Copy and replace your `url` - found in Serverless `deploy` command output - and `name` parameter in the following `curl` command in your terminal or in Postman to test your newly deployed application.
+### Installation 
 
-```
-curl --location --request POST 'https://myApiEndpoint/dev/hello' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "name": "Frederic"
-}'
-```
+1. Open terminal and install Serverless Framework globally  
+   ```cmd
+   npm install -g serverless 
+   ```
+2. Clone the repo 
+   ```bash
+   git clone https://github.com/vihugoos/certificate-generator.git
+   ```
+3. Inside the project root directory install all project dependencies 
+   ```bash
+   yarn install 
+   ```
+4. Create avatar and cars folder
+   ```cmd
+   mkdir tmp/avatar | mkdir tmp/cars 
+   ```
+4. Create database services in docker containers 
+   ```cmd
+   docker compose up -d
+   ```
+5. Run the migrate 
+   ```cmd
+   yarn typeorm migration:run 
+   ```
 
-## Template features
 
-### Project structure
+<!---- USAGE EXAMPLES ----> 
+## Usage
 
-The project code base is mainly located within the `src` folder. This folder is divided in:
+With the installation complete, we can start the project.
 
-- `functions` - containing code base and configuration for your lambda functions
-- `libs` - containing shared code base between your lambdas
+* Starting the project 
+   ```bash
+   yarn run dev  
+   ```
 
-```
-.
-├── src
-│   ├── functions               # Lambda configuration and source code folder
-│   │   ├── hello
-│   │   │   ├── handler.ts      # `Hello` lambda source code
-│   │   │   ├── index.ts        # `Hello` lambda Serverless configuration
-│   │   │   ├── mock.json       # `Hello` lambda input parameter, if any, for local invocation
-│   │   │   └── schema.ts       # `Hello` lambda input event JSON-Schema
-│   │   │
-│   │   └── index.ts            # Import/export of all lambda configurations
-│   │
-│   └── libs                    # Lambda shared code
-│       └── apiGateway.ts       # API Gateway specific helpers
-│       └── handlerResolver.ts  # Sharable library for resolving lambda handlers
-│       └── lambda.ts           # Lambda middleware
-│
-├── package.json
-├── serverless.ts               # Serverless service file
-├── tsconfig.json               # Typescript compiler configuration
-├── tsconfig.paths.json         # Typescript paths
-└── webpack.config.js           # Webpack configuration
-```
 
-### 3rd party libraries
+<!---- TESTS SETUP ----> 
+## Tests
 
-- [json-schema-to-ts](https://github.com/ThomasAribart/json-schema-to-ts) - uses JSON-Schema definitions used by API Gateway for HTTP request validation to statically generate TypeScript types in your lambda's handler code base
-- [middy](https://github.com/middyjs/middy) - middleware engine for Node.Js lambda. This template uses [http-json-body-parser](https://github.com/middyjs/middy/tree/master/packages/http-json-body-parser) to convert API Gateway `event.body` property, originally passed as a stringified JSON, to its corresponding parsed object
-- [@serverless/typescript](https://github.com/serverless/typescript) - provides up-to-date TypeScript definitions for your `serverless.ts` service file
+To be able to run all the tests, follow the commands below:
 
-### Advanced usage
+1. Install PostgreSQL Client
+   ```bash
+   sudo apt-get install -y postgresql-client
+   ```
+1. Open and connect terminal-based front-end for PostgreSQL (password: 12345)
+   ```cmd
+   psql -h localhost -p 6443 -U user_test -W rentx
+   ```
+2. Run the query (create a database just for testing) 
+   ```sql
+   CREATE DATABASE rentx_test;
+   ```
+3. Quit psql
+   ```cmd
+   \q
+   ```
+4. Run all test
+   ```cmd
+   yarn test 
+   ```
 
-Any tsconfig.json can be used, but if you do, set the environment variable `TS_NODE_CONFIG` for building the application, eg `TS_NODE_CONFIG=./tsconfig.app.json npx serverless webpack`
+<br/> <br/>
+
+
+<!---- API Documentation ----> 
+## API Documentation
+
+A complete and detailed documentation of the application in swagger. To view, visit [`api-rentx.com/api-docs/`](https://api-rentx.com/api-docs/)
+
+<img src="https://user-images.githubusercontent.com/44311634/208123952-63101a0d-58e2-4b09-9fb2-6740ca89fdd0.png" align="center" alt="Swagger DOC">
+
+<br/> <br/>
+
+
+## Requirements Documentation 
+
+A complete application specification, with all functional and non-functional requirements and business rules.
+
+### Cars Registration 
+
+**RF** (<i>Functional Requirements</i>)
+- It must be possible registration a new car.
+
+**RN** (<i>Business Rules</i>)
+- It must not be possible to register a car with an existing license plate.
+- The car must be registered, by default, with availability.
+- The user responsible for the registration must be an administrator user. 
+
+---
+
+
+### Car Listing 
+
+**RF** (<i>Functional Requirements</i>)
+- It must be possible to list **available** cars. 
+- It must be possible to list all available cars by car name.
+- It must be possible to list all available cars by brand.
+- It must be possible to list all available cars by category id.
+- It must be possible to list all cars.
+
+**RN** (<i>Business Rules</i>)
+- To list available cars, the user does not need to be logged into the system.
+- To list all cars, the user must be an administrator.
+
+---
+
+
+### Car Category 
+
+**RF** (<i>Functional Requirements</i>)
+- It must be possible to register a new category.
+- It must be possible to import a CSV with many categories to create.
+- It must be possible to list all categories.
+
+**RN** (<i>Business Rules</i>)
+- It must not be possible to register a new category for an existing category (with same name).
+- The user responsible for the registration must be an administrator user.
+- To list all categories, the user does not need to be logged into the system.
+
+---
+
+
+### Car Specifications 
+
+**RF** (<i>Functional Requirements</i>)
+- It must be possible to register a new specification for a car.
+- It must be possible to list all specifications.
+
+**RN** (<i>Business Rules</i>)
+- It must not be possible to register a new specification for an existing specification (with same name).
+- It must not be possible to register a specification for an unregistered car. 
+- The user responsible for the registration must be an administrator user.
+- To list all specifications, the user must be an administrator. 
+
+---
+
+
+### Car Images 
+
+**RF** (<i>Functional Requirements</i>)
+- It must be possible to register car image. 
+- It must be able to list all car images.
+
+**RNF** (<i>Non-functional requirements</i>)
+- Use the multer library to upload the files. 
+
+**RN** (<i>Business Rules</i>)
+- The user must able to register more than one image for the same car. 
+- The user responsible for the registration must be an administrator user. 
+- To list all car images, the user must be an administrator.
+
+---
+
+
+### Car Rental Registration 
+
+**RF** (<i>Functional Requirements</i>)
+- It must be possible to register a new rental. 
+
+**RN** (<i>Business Rules</i>)
+- The rental must have a minimum duration of 24 hours. 
+- It must not to be possible to register a new rental for a non-existent car.
+- It must not be possible to register a new rental if it's already open for the same user. 
+- It must not be possible to register a new rental if it's already open for the same car. 
+- The user must be logged into the application.
+- After making a rental, the status of the car must be changed to unavailable.
+
+---
+
+
+### Car Devolution
+
+**RF** (<i>Functional Requirements</i>)
+- It must be possible to return the car.
+
+**RN** (<i>Business Rules</i>)
+- If the car returns with less than 24 hours, it must be charged for the full day.
+- It must not be possible to return a non-existent rental.
+- After the return, the car must be released for another rental.
+- After the return, the user must be released for another rental.
+- After the return, the rent total must be calculated.
+- If the time of return is later than the estimated time of delivery, a fine will be charged proportional to the days of delay.
+- If there are fines, they must be added to the total rent.
+- The user must be logged into the application.
+
+--- 
+
+
+### Users
+
+**RF** (<i>Functional Requirements</i>)
+- It must be possible to create a new user.
+- It must be possible to authenticate a user to the application.
+- It must be possible to upload a new profile picture for the user (avatar).
+- It must be possible to show all information about the user.
+- It must to possible to list all users.
+
+**RN** (<i>Business Rules</i>)
+- It must not be possible to create a new user with an existing email.
+- To create a new user, the user must not be logged into the application. 
+- To list all users, the user must be an administrator.
+
+---
+
+
+### User Password Recovery
+
+**RF** (<i>Functional Requirements</i>)
+- It must be possible for the user to recover the password by informing the email.
+- The user should received an e-mail with step-by-step for password recovery.
+- The user should be able to get a new password.
+
+**RN** (<i>Business Rules</i>)
+- The user must enter a new password.
+- The link sent for password recovery must expire in 24 hours.
+
+---
+
+
+### User Rentals Listing
+
+**RF** (<i>Functional Requirements</i>)
+- It must be possible to search all rentals made by user. 
+
+**RN** (<i>Business Rules</i>)
+- The user must be logged into the application.
+
+<br/> <br/> 
+
+
+<!---- CONTRIBUTING ---->
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<br/> 
+
+
+<!---- CONTACT ---->
+## Contact
+
+Developer @vihugoos - victorhugoos@live.com  
+
+<p align="right"><a href="#top"> &#129045; back to top </a></p> 
