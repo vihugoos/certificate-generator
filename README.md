@@ -43,7 +43,7 @@
 <!---- THE PROJECT ---->
 ## About The Project 
 
-<img src="" align="center" alt="Project Home Page">
+<img src="https://user-images.githubusercontent.com/44311634/211233027-db344b12-9a9c-4562-91d7-d56a67d54c3d.png" align="center" alt="Project Home Page">
 Two AWS Lambda functions for generating and verifying a course certificate (Serverless with Node.js). The <b>generateCertificate</b> function is responsible for receiving the data, generating a certificate, storing it in Amazon S3 and returning the pdf link in the request response. The <b>verifyCertificate</b> function receives the user ID to verify if the certificate is valid, if valid, it returns the pdf link.
 
 ### Built With 
