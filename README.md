@@ -84,7 +84,7 @@ Two AWS Lambda functions for generating and verifying a course certificate (Serv
 
 To get started, you need to have <strong>Node.js 18+</strong> installed on your machine, for more information visit <a href="https://nodejs.org/en/download/"> Node.js Downloads</a>. 
 
-<strong>Obs:</strong> This guide will only serve to run the project locally (development environment), initially based on linux systems. The part of storing the PDF in Amazon S3 won't work unless you deploy the application on AWS. However, you can verify the created PDF at `./certificate.pdf`.
+<strong>Obs:</strong> This guide will only serve to run the project locally (development environment), initially based on linux systems. The part of storing the PDF in Amazon S3 won't work unless you create an S3 bucket in AWS and configure it in the project. However, you can verify the created PDF at `./certificate.pdf`.
 
 ### Prerequisites 
 
